@@ -12,8 +12,20 @@
 
   # vi Capfile
 
-    load 'deploy' if respond_to?(:namespace) # cap2 differentiator
     require 'rubygems'
-    require 'basic_deploy'
-    load    'config/deploy'
+
+    begin
+      require 'basic_deploy'
+    rescue LoadError
+      puts <<-EOD
+
+    BASIC-DEPLOY RECIPE REQUIRED
+
+    $ sudo gem install dusty-basic_deploy
+
+      EOD
+      exit
+    end
+
+    load 'config/deploy'
 
