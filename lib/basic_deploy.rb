@@ -256,12 +256,6 @@ other deployed revisions are removed from the servers.
       end
     end
 
-
-    desc 'Deploys the application and then installs the required gems'
-    task :cold do
-      update
-    end
-
     namespace :pending do
       desc 'Displays the diff since your last deploy'
       task :diff, :except => { :no_release => true } do
