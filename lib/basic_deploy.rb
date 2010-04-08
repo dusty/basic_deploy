@@ -43,6 +43,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   _cset :version_dir,       "releases"
   _cset :shared_dir,        "shared"
+  _cset :shared_dirs,       %w(log tmp vendor config)
   _cset :shared_children,   %w(log tmp vendor)
   _cset :current_dir,       "current"
 
@@ -142,7 +143,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc 'Setup the project for deployment'
     task :setup, :except => { :no_release => true } do
       dirs = [deploy_to, releases_path, shared_path]
-      dirs += shared_children.map { |d| File.join(shared_path, d) }
+      dirs += shared_dirs.map { |d| File.join(shared_path, d) }
       run "#{try_sudo} mkdir -p #{dirs.join(' ')} && #{try_sudo} chmod g+w #{dirs.join(' ')}"
     end
 
