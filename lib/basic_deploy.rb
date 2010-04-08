@@ -144,8 +144,6 @@ Capistrano::Configuration.instance(:must_exist).load do
       dirs = [deploy_to, releases_path, shared_path]
       dirs += shared_children.map { |d| File.join(shared_path, d) }
       run "#{try_sudo} mkdir -p #{dirs.join(' ')} && #{try_sudo} chmod g+w #{dirs.join(' ')}"
-      run "#{try_sudo} mkdir -p #{File.join(shared_path, 'tmp', 'pids')}"
-      run "#{try_sudo} mkdir -p #{File.join(shared_path, 'tmp', 'sockets')}"
     end
 
     desc 'Update the code of your project and the symlinks'
