@@ -43,8 +43,8 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   _cset :version_dir,       "releases"
   _cset :shared_dir,        "shared"
-  _cset :shared_dirs,       %w(log tmp vendor config)
-  _cset :shared_children,   %w(log tmp vendor)
+  _cset :shared_dirs,       %w(log tmp config)
+  _cset :shared_children,   %w(log tmp)
   _cset :current_dir,       "current"
 
   _cset(:releases_path)     { File.join(deploy_to, version_dir) }
@@ -270,6 +270,19 @@ other deployed revisions are removed from the servers.
       end
     end
 
+    task :start, :roles => :app do
+      run "touch #{current_release}/tmp/restart.txt"
+    end
+
+    task :stop, :roles => :app do
+      # Do nothing.
+    end
+
+    desc "Restart Application"
+    task :restart, :roles => :app do
+      run "touch #{current_release}/tmp/restart.txt"
+    end
+    
   end
 
 end # Capistrano::Configuration.instance(:must_exist).load do
